@@ -4,7 +4,26 @@
 <NetworkDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Definition.xsd" version="0.0.1">
 	<Document name="BMW-E39" version="0.0.1" author="kennygprs@gmail.com">BMW E39 CANBUS definition</Document>
 
-	<Node id="12" name="DME" />
+        <Node id="12" name="DME" />   <!-- Digital Motor Electronics -->
+        <Node id="13" name="TCM" />   <!-- Transmission Control Module -->
+        <Node id="14" name="ABS" />   <!-- Anti-lock Braking System -->
+        <Node id="15" name="BCM" />   <!-- Body Control Module -->
+        <Node id="16" name="ECM" />   <!-- Engine Control Module -->
+        <Node id="17" name="SRS" />   <!-- Supplemental Restraint System (Airbags) -->
+        <Node id="18" name="PDC" />   <!-- Park Distance Control -->
+        <Node id="19" name="DSC" />   <!-- Dynamic Stability Control -->
+        <Node id="20" name="EWS" />   <!-- Electronic Anti-Theft System -->
+        <Node id="21" name="IHKA" />  <!-- Integrated Heating and Air Conditioning -->
+        <Node id="22" name="KOMBI" /> <!-- Instrument Cluster -->
+        <Node id="23" name="NAV" />   <!-- Navigation System -->
+        <Node id="24" name="RADIO" /> <!-- Radio Module -->
+        <Node id="25" name="XENON" /> <!-- Xenon Headlight Control -->
+        <Node id="26" name="FEM" />   <!-- Front Electronic Module -->
+        <Node id="27" name="REM" />   <!-- Rear Electronic Module -->
+        <Node id="28" name="TMS" />   <!-- Tire Monitoring System -->
+        <Node id="29" name="AHL" />   <!-- Adaptive Headlight Control -->
+        <Node id="30" name="DWA" />   <!-- Anti-Theft Alarm System -->
+        <Node id="31" name="MFL" />   <!-- Multi-Function Steering Wheel -->
 
 	<Bus name="PTCAN">
 		<Message id="0x316" name="DME_316" length="8" interval="10" triggered="false" format="standard" remote="false">
@@ -79,6 +98,181 @@
 			<Signal name="vehicle_speed"         offset="40" length="16"><Value unit="kph"     slope="1"                  intercept="0"   min="0"   max="65535" /></Signal>
 			<Signal name="fuel_pump_duty"        offset="56" length="8" ><Value unit="percent" slope="0.3921568627450980" intercept="0"   min="0"   max="100"   /></Signal>
 		</Message>
+
+                <Message id="0x700" name="TCM_700" length="8" interval="10" triggered="false" format="standard" remote="false">
+		    <Producer>
+		        <NodeRef id="13" /> <!-- TCM Node -->
+		    </Producer>
+		    <Signal name="transmission_gear" offset="0" length="4"><Value unit="gear" slope="1" min="0" max="6" /></Signal>
+		    <Signal name="transmission_rpm" offset="4" length="16"><Value unit="rpm" slope="1" min="0" max="8000" /></Signal>
+		    <Signal name="transmission_temp" offset="20" length="8"><Value unit="celsius" slope="1" intercept="-48" min="-48" max="200" /></Signal>
+		    <Signal name="transmission_status" offset="28" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="transmission_fault" offset="29" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="transmission_mode" offset="30" length="2"><Value unit="mode" slope="1" min="0" max="3" /></Signal>
+		</Message>
+
+		<Message id="0x701" name="TCM_701" length="8" interval="10" triggered="false" format="standard" remote="false">
+		    <Producer>
+		        <NodeRef id="13" /> <!-- TCM Node -->
+		    </Producer>
+		    <Signal name="torque_converter_lockup" offset="0" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="shift_request" offset="1" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="shift_point" offset="2" length="4"><Value unit="rpm" slope="1" min="0" max="8000" /></Signal>
+		    <Signal name="transmission_fluid_level" offset="6" length="8"><Value unit="percent" slope="0.3921568627450980" min="0" max="100" /></Signal>
+		    <Signal name="transmission_fluid_temp" offset="7" length="8"><Value unit="celsius" slope="1" intercept="-48" min="-48" max="200" /></Signal>
+		</Message>
+
+                <Message id="0x400" name="PDC_400" length="8" interval="10" triggered="false" format="standard" remote="false">
+		    <Producer>
+		        <NodeRef id="15" /> <!-- PDC Node -->
+		    </Producer>
+		    <Signal name="pdc_status" offset="0" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="pdc_obstacle_left" offset="1" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="pdc_obstacle_right" offset="2" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="pdc_distance_left" offset="3" length="8"><Value unit="centimeters" slope="1" intercept="0" min="0" max="255" /></Signal>
+		    <Signal name="pdc_distance_right" offset="4" length="8"><Value unit="centimeters" slope="1" intercept="0" min="0" max="255" /></Signal>
+		    <Signal name="pdc_warning_light" offset="5" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="pdc_buzzer_status" offset="6" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="pdc_system_fault" offset="7" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		</Message>
+
+		<Message id="0x401" name="PDC_401" length="8" interval="10" triggered="false" format="standard" remote="false">
+		    <Producer>
+		        <NodeRef id="15" /> <!-- PDC Node -->
+		    </Producer>
+		    <Signal name="pdc_obstacle_rear_left" offset="0" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="pdc_obstacle_rear_right" offset="1" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="pdc_distance_rear_left" offset="2" length="8"><Value unit="centimeters" slope="1" intercept="0" min="0" max="255" /></Signal>
+		    <Signal name="pdc_distance_rear_right" offset="3" length="8"><Value unit="centimeters" slope="1" intercept="0" min="0" max="255" /></Signal>
+		    <Signal name="pdc_front_sensor_status" offset="4" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="pdc_rear_sensor_status" offset="5" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="pdc_system_ready" offset="6" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="pdc_test_mode" offset="7" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		</Message>
+
+                <Message id="0x500" name="IHKA_500" length="8" interval="10" triggered="false" format="standard" remote="false">
+		    <Producer>
+		        <NodeRef id="21" /> <!-- IHKA Node -->
+		    </Producer>
+		    <Signal name="ihka_status" offset="0" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="ihka_temperature_set" offset="1" length="8"><Value unit="celsius" slope="1" intercept="-40" min="-40" max="60" /></Signal>
+		    <Signal name="ihka_fan_speed" offset="2" length="4"><Value unit="percent" slope="1" min="0" max="100" /></Signal>
+		    <Signal name="ihka_mode" offset="3" length="2"><Value unit="mode" slope="1" min="0" max="3" /></Signal>
+		    <Signal name="ihka_air_distribution" offset="5" length="3"><Value unit="distribution" slope="1" min="0" max="7" /></Signal>
+		    <Signal name="ihka_ac_status" offset="6" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="ihka_defrost_status" offset="7" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		</Message>
+
+		<Message id="0x501" name="IHKA_501" length="8" interval="10" triggered="false" format="standard" remote="false">
+		    <Producer>
+		        <NodeRef id="21" /> <!-- IHKA Node -->
+		    </Producer>
+		    <Signal name="ihka_external_temperature" offset="0" length="8"><Value unit="celsius" slope="1" intercept="-40" min="-40" max="60" /></Signal>
+		    <Signal name="ihka_interior_temperature" offset="1" length="8"><Value unit="celsius" slope="1" intercept="-40" min="-40" max="60" /></Signal>
+		    <Signal name="ihka_system_fault" offset="2" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="ihka_heater_status" offset="3" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="ihka_cabin_filter_status" offset="4" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		</Message>
+
+                <Message id="0x600" name="KOMBI_600" length="8" interval="10" triggered="false" format="standard" remote="false">
+		    <Producer>
+		        <NodeRef id="22" /> <!-- KOMBI/IKE Node -->
+		    </Producer>
+		    <Signal name="speed" offset="0" length="16"><Value unit="kph" slope="1" intercept="0" min="0" max="255" /></Signal>
+		    <Signal name="rpm" offset="2" length="16"><Value unit="rpm" slope="1" min="0" max="8000" /></Signal>
+		    <Signal name="fuel_level" offset="4" length="8"><Value unit="percent" slope="0.3921568627450980" min="0" max="100" /></Signal>
+		    <Signal name="engine_temperature" offset="5" length="8"><Value unit="celsius" slope="1" intercept="-40" min="-40" max="120" /></Signal>
+		    <Signal name="odometer" offset="6" length="16"><Value unit="kilometers" slope="1" intercept="0" min="0" max="999999" /></Signal>
+		    <Signal name="warning_lights" offset="8" length="8"><Value unit="boolean" slope="1" intercept="0" min="0" max="255" /></Signal>
+		</Message>
+
+		<Message id="0x601" name="KOMBI_601" length="8" interval="10" triggered="false" format="standard" remote="false">
+		    <Producer>
+		        <NodeRef id="22" /> <!-- KOMBI/IKE Node -->
+		    </Producer>
+		    <Signal name="trip_meter" offset="0" length="16"><Value unit="kilometers" slope="1" intercept="0" min="0" max="9999" /></Signal>
+		    <Signal name="average_fuel_consumption" offset="2" length="8"><Value unit="liters_per_100km" slope="0.1" intercept="0" min="0" max="20" /></Signal>
+		    <Signal name="instantaneous_fuel_consumption" offset="3" length="8"><Value unit="liters_per_hour" slope="0.1" intercept="0" min="0" max="20" /></Signal>
+		    <Signal name="battery_voltage" offset="4" length="8"><Value unit="volts" slope="0.1" intercept="0" min="0" max="25.5" /></Signal>
+		    <Signal name="oil_pressure" offset="5" length="8"><Value unit="bar" slope="0.1" intercept="0" min="0" max="10" /></Signal>
+		    <Signal name="service_interval" offset="6" length="8"><Value unit="days" slope="1" intercept="0" min="0" max="365" /></Signal>
+		</Message>
+
+                <Message id="0x700" name="NAV_700" length="8" interval="10" triggered="false" format="standard" remote="false">
+		    <Producer>
+		        <NodeRef id="23" /> <!-- NAV Node -->
+		    </Producer>
+		    <Signal name="navigation_status" offset="0" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="current_location_latitude" offset="1" length="4"><Value unit="degrees" slope="1e-7" intercept="0" min="-90" max="90" /></Signal>
+		    <Signal name="current_location_longitude" offset="5" length="4"><Value unit="degrees" slope="1e-7" intercept="0" min="-180" max="180" /></Signal>
+		    <Signal name="destination_latitude" offset="9" length="4"><Value unit="degrees" slope="1e-7" intercept="0" min="-90" max="90" /></Signal>
+		    <Signal name="destination_longitude" offset="13" length="4"><Value unit="degrees" slope="1e-7" intercept="0" min="-180" max="180" /></Signal>
+		    <Signal name="route_status" offset="17" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="estimated_time_of_arrival" offset="18" length="4"><Value unit="seconds" slope="1" intercept="0" min="0" max="86400" /></Signal>
+		</Message>
+
+		<Message id="0x701" name="NAV_701" length="8" interval="10" triggered="false" format="standard" remote="false">
+		    <Producer>
+		        <NodeRef id="23" /> <!-- NAV Node -->
+		    </Producer>
+		    <Signal name="current_speed" offset="0" length="8"><Value unit="kph" slope="1" intercept="0" min="0" max="255" /></Signal>
+		    <Signal name="navigation_mode" offset="1" length="2"><Value unit="mode" slope="1" min="0" max="3" /></Signal>
+		    <Signal name="next_turn_direction" offset="3" length="2"><Value unit="direction" slope="1" min="0" max="7" /></Signal>
+		    <Signal name="distance_to_destination" offset="5" length="8"><Value unit="meters" slope="1" intercept="0" min="0" max="65535" /></Signal>
+		    <Signal name="current_map_version" offset="6" length="2"><Value unit="version" slope="1" intercept="0" min="0" max="65535" /></Signal>
+		    <Signal name="navigation_error" offset="8" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		</Message>
+
+                <Message id="0x800" name="XENON_800" length="8" interval="10" triggered="false" format="standard" remote="false">
+		    <Producer>
+		        <NodeRef id="25" /> <!-- XENON Node -->
+		    </Producer>
+		    <Signal name="xenon_status" offset="0" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="xenon_bulb_fault" offset="1" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="xenon_level_adjustment" offset="2" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="xenon_aiming_status" offset="3" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="xenon_temperature" offset="4" length="8"><Value unit="celsius" slope="1" intercept="-40" min="-40" max="120" /></Signal>
+		    <Signal name="xenon_voltage" offset="5" length="8"><Value unit="volts" slope="0.1" intercept="0" min="0" max="25.5" /></Signal>
+		    <Signal name="xenon_current" offset="6" length="8"><Value unit="amps" slope="0.1" intercept="0" min="0" max="10" /></Signal>
+		</Message>
+
+		<Message id="0x801" name="XENON_801" length="8" interval="10" triggered="false" format="standard" remote="false">
+		    <Producer>
+		        <NodeRef id="25" /> <!-- XENON Node -->
+		    </Producer>
+		    <Signal name="xenon_auto_leveling_status" offset="0" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="xenon_left_bulb_status" offset="1" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="xenon_right_bulb_status" offset="2" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="xenon_left_aiming_position" offset="3" length="8"><Value unit="degrees" slope="1" intercept="0" min="-10" max="10" /></Signal>
+		    <Signal name="xenon_right_aiming_position" offset="4" length="8"><Value unit="degrees" slope="1" intercept="0" min="-10" max="10" /></Signal>
+		    <Signal name="xenon_dimming_status" offset="5" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		</Message>
+
+                <Message id="0x900" name="MFL_900" length="8" interval="10" triggered="false" format="standard" remote="false">
+		    <Producer>
+		        <NodeRef id="31" /> <!-- MFL Node -->
+		    </Producer>
+		    <Signal name="mfl_status" offset="0" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="mfl_volume_up" offset="1" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="mfl_volume_down" offset="2" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="mfl_next_track" offset="3" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="mfl_previous_track" offset="4" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="mfl_phone_answer" offset="5" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="mfl_phone_end" offset="6" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="mfl_cruise_control" offset="7" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		</Message>
+
+		<Message id="0x901" name="MFL_901" length="8" interval="10" triggered="false" format="standard" remote="false">
+		    <Producer>
+		        <NodeRef id="31" /> <!-- MFL Node -->
+		    </Producer>
+		    <Signal name="mfl_mode" offset="0" length="2"><Value unit="mode" slope="1" min="0" max="3" /></Signal>
+		    <Signal name="mfl_navigation" offset="2" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="mfl_assist" offset="3" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="mfl_display_status" offset="4" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		    <Signal name="mfl_error_status" offset="5" length="1"><Value unit="boolean" slope="1" intercept="0" min="0" max="1" /></Signal>
+		</Message>
+
 	</Bus>
 </NetworkDefinition>
 
