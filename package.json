@@ -15,6 +15,7 @@
 		"jsonfile": "^6.1.0",
 		"object-path": "^0.11.8",
 		"rfdc": "^1.4.1",
+                "socketcan": "^4.0.7",
 		"trucolor": "2.0.4"
 	},
 	"description": "BMW CANBUS/IBUS/KBUS server",
@@ -23,7 +24,8 @@
 		"eslint": "^9.17.0",
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-promise": "^7.2.1",
-		"globals": "^15.13.0"
+		"globals": "^15.13.0",
+		"socketcan": "^4.0.7"
 	},
 	"directories": {
 		"lib": "./lib",
